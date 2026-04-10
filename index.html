@@ -1,952 +1,685 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brauhaus Spandau — Hausgebrautes Bier in der Spandauer Altstadt</title>
-<meta name="description" content="Berlins Hausbrauerei in der Spandauer Altstadt — Havelbräu vom Fass, Brauereiführungen, Biergarten an der Havel. Täglich ab 10 Uhr.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0d0906;
-    --surface: #13100c;
-    --surface2: #1a1510;
-    --accent: #8B5E3C;
-    --accent-light: #B07D52;
-    --accent-border: rgba(139,94,60,0.35);
-    --accent-glow: rgba(139,94,60,0.12);
-    --text: #f0e8df;
-    --text-muted: #9a8878;
-    --gold: #C9A55A;
-    --gold-border: rgba(201,165,90,0.3);
-    --copper: #B87333;
-    --white: #ffffff;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brauhaus Spandau | Tradition seit Generationen</title>
+    <meta name="description" content="Brauhaus Spandau - Berlins urigste Brauerei direkt am historischen Kolk. Hausgebrautes Bier, deftige Berliner Küche und Biergarten in Spandau.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; font-size: 16px; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
-    overflow-x: hidden;
-    line-height: 1.7;
-  }
+        :root {
+            --bg-primary: #0D0B09;
+            --bg-secondary: #141210;
+            --bg-tertiary: #1C1A17;
+            --copper: #B87333;
+            --copper-light: #D4935A;
+            --copper-dark: #8B5A2B;
+            --amber: #D4A03C;
+            --cream: #F5E6C8;
+            --text-primary: #EDE5D8;
+            --text-secondary: #B0A697;
+            --text-muted: #736B60;
+            --border: rgba(184, 115, 51, 0.12);
+            --border-hover: rgba(184, 115, 51, 0.3);
+            --font-display: 'Playfair Display', serif;
+            --font-body: 'DM Sans', sans-serif;
+        }
 
-  /* ── PRELOADER ── */
-  #preloader {
-    position: fixed; inset: 0; z-index: 9999;
-    background: var(--bg);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    gap: 1.4rem;
-    transition: opacity 0.7s ease, visibility 0.7s ease;
-  }
-  #preloader.hidden { opacity: 0; visibility: hidden; }
+        html { scroll-behavior: smooth; }
 
-  /* Brewing kettle preloader */
-  .preloader-kettle {
-    width: 52px; height: 58px;
-    position: relative;
-  }
-  .preloader-kettle .kettle-body {
-    width: 52px; height: 44px;
-    border: 2px solid var(--accent-border);
-    border-radius: 4px 4px 18px 18px;
-    position: absolute;
-    bottom: 0;
-    overflow: hidden;
-  }
-  .preloader-kettle .kettle-fill {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 40%;
-    background: var(--accent);
-    opacity: 0.5;
-    animation: brew-fill 2s ease-in-out infinite;
-  }
-  @keyframes brew-fill {
-    0%, 100% { height: 30%; opacity: 0.4; }
-    50% { height: 55%; opacity: 0.7; }
-  }
-  .preloader-kettle .kettle-neck {
-    width: 20px; height: 14px;
-    border: 2px solid var(--accent-border);
-    border-bottom: none;
-    border-radius: 4px 4px 0 0;
-    position: absolute;
-    top: 0; left: 50%; transform: translateX(-50%);
-  }
-  .preloader-kettle .kettle-steam {
-    position: absolute;
-    top: -14px; left: 50%; transform: translateX(-50%);
-    display: flex; gap: 4px;
-  }
-  .preloader-kettle .kettle-steam span {
-    width: 2px; height: 10px;
-    background: var(--accent-light);
-    border-radius: 2px;
-    opacity: 0;
-    animation: steam 1.5s ease-in-out infinite;
-  }
-  .preloader-kettle .kettle-steam span:nth-child(2) { animation-delay: 0.3s; }
-  .preloader-kettle .kettle-steam span:nth-child(3) { animation-delay: 0.6s; }
-  @keyframes steam {
-    0% { opacity: 0; transform: translateY(0) scaleX(1); }
-    50% { opacity: 0.8; transform: translateY(-6px) scaleX(0.8); }
-    100% { opacity: 0; transform: translateY(-12px) scaleX(0.5); }
-  }
-  .preloader-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.35rem;
-    font-weight: 300;
-    letter-spacing: 0.22em;
-    color: var(--text-muted);
-    text-transform: uppercase;
-  }
-  .preloader-sub {
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(139,94,60,0.5);
-  }
-  .preloader-line {
-    width: 110px; height: 1px;
-    background: var(--accent-border);
-    position: relative; overflow: hidden;
-  }
-  .preloader-line::after {
-    content: '';
-    position: absolute; top: 0; left: -100%;
-    width: 100%; height: 100%;
-    background: var(--accent);
-    animation: sweep 1.6s ease-in-out infinite;
-  }
-  @keyframes sweep { 0% { left: -100%; } 100% { left: 100%; } }
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-  /* ── SCROLL PROGRESS ── */
-  #scroll-progress {
-    position: fixed; top: 0; left: 0;
-    height: 2px; width: 0%;
-    background: linear-gradient(90deg, var(--accent), var(--copper));
-    z-index: 1000;
-    transition: width 0.1s linear;
-  }
+        .nav {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            padding: 1.5rem 3rem;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: all 0.4s ease;
+        }
 
-  /* ── NAV ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 1.4rem 3rem;
-    display: flex; align-items: center; justify-content: space-between;
-    transition: background 0.4s, padding 0.4s, backdrop-filter 0.4s;
-  }
-  nav.scrolled {
-    background: rgba(13,9,6,0.93);
-    backdrop-filter: blur(12px);
-    padding: 0.9rem 3rem;
-    border-bottom: 1px solid var(--accent-border);
-  }
-  .nav-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem; font-weight: 400;
-    letter-spacing: 0.06em;
-    color: var(--text); text-decoration: none;
-  }
-  .nav-logo span { color: var(--accent-light); }
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a {
-    color: var(--text-muted); text-decoration: none;
-    font-size: 0.78rem; letter-spacing: 0.12em;
-    text-transform: uppercase; transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--text); }
-  .nav-cta {
-    padding: 0.5rem 1.2rem;
-    border: 1px solid var(--accent-border) !important;
-    color: var(--accent-light) !important;
-    transition: background 0.2s, color 0.2s !important;
-  }
-  .nav-cta:hover { background: var(--accent) !important; color: var(--text) !important; }
+        .nav.scrolled {
+            background: rgba(13, 11, 9, 0.96);
+            backdrop-filter: blur(20px);
+            padding: 1rem 3rem;
+            border-bottom: 1px solid var(--border);
+        }
 
-  /* ── HERO ── */
-  .hero {
-    position: relative; height: 100vh; min-height: 640px;
-    display: flex; align-items: flex-end; overflow: hidden;
-  }
-  .hero-bg {
-    position: absolute; inset: 0;
-    background-image: url('https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=1800&q=85');
-    background-size: cover; background-position: center 45%;
-    transform: scale(1.05);
-    transition: transform 10s ease-out;
-  }
-  .hero-bg.loaded { transform: scale(1); }
-  .hero-overlay {
-    position: absolute; inset: 0;
-    background: linear-gradient(180deg,
-      rgba(13,9,6,0.2) 0%, rgba(13,9,6,0.1) 40%,
-      rgba(13,9,6,0.7) 75%, rgba(13,9,6,0.97) 100%);
-  }
+        .nav-logo {
+            font-family: var(--font-display);
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--copper-light);
+            text-decoration: none; letter-spacing: 0.08em;
+        }
 
-  /* Copper kettle decorative element */
-  .hero-kettle-deco {
-    position: absolute; top: 16vh; right: 7vw;
-    width: 100px; height: 120px; opacity: 0.2;
-  }
-  .hero-kettle-deco::before {
-    content: '';
-    position: absolute; bottom: 0; left: 0; right: 0;
-    height: 80px;
-    border: 1px solid var(--copper);
-    border-radius: 4px 4px 24px 24px;
-  }
-  .hero-kettle-deco::after {
-    content: '';
-    position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%);
-    width: 28px; height: 40px;
-    border: 1px solid var(--copper);
-    border-bottom: none;
-    border-radius: 4px 4px 0 0;
-  }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
 
-  /* Copper bottom line */
-  .hero-copper-line {
-    position: absolute; bottom: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, var(--copper), var(--accent), var(--copper), transparent);
-  }
+        .nav-links a {
+            color: var(--text-secondary); text-decoration: none;
+            font-size: 0.78rem; letter-spacing: 0.12em;
+            text-transform: uppercase; font-weight: 500;
+            transition: color 0.3s ease;
+        }
 
-  /* Badge: 30+ Jahre */
-  .hero-badge {
-    position: absolute; top: 22vh; left: 5vw;
-    border: 1px solid var(--accent-border);
-    background: rgba(13,9,6,0.7);
-    backdrop-filter: blur(4px);
-    padding: 0.8rem 1.4rem;
-    text-align: center;
-  }
-  .hero-badge .hb-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.2rem; font-weight: 300;
-    color: var(--accent-light); line-height: 1; display: block;
-  }
-  .hero-badge .hb-label {
-    font-size: 0.62rem; letter-spacing: 0.18em;
-    text-transform: uppercase; color: var(--text-muted);
-    display: block; margin-top: 0.3rem;
-  }
+        .nav-links a:hover { color: var(--copper-light); }
 
-  .hero-content {
-    position: relative; z-index: 2;
-    padding: 0 6vw 6rem; max-width: 820px;
-  }
-  .hero-eyebrow {
-    font-size: 0.72rem; letter-spacing: 0.28em;
-    text-transform: uppercase; color: var(--accent-light);
-    margin-bottom: 1rem;
-    display: flex; align-items: center; gap: 1rem;
-  }
-  .hero-eyebrow::before {
-    content: ''; width: 32px; height: 1px; background: var(--accent);
-  }
-  .hero-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3.4rem, 7.5vw, 6.8rem);
-    font-weight: 300; line-height: 1.0;
-    letter-spacing: -0.01em; margin-bottom: 0.6rem;
-  }
-  .hero-title em { font-style: italic; color: var(--accent-light); }
-  .hero-subtitle {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.1rem, 2.2vw, 1.5rem);
-    font-weight: 300; font-style: italic;
-    color: var(--text-muted); margin-bottom: 2rem;
-  }
-  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .btn-primary {
-    padding: 0.9rem 2.2rem; background: var(--accent);
-    color: var(--text); text-decoration: none;
-    font-size: 0.78rem; letter-spacing: 0.14em;
-    text-transform: uppercase; border: none; cursor: pointer;
-    transition: background 0.2s;
-  }
-  .btn-primary:hover { background: var(--accent-light); }
-  .btn-outline {
-    padding: 0.9rem 2.2rem; border: 1px solid var(--accent-border);
-    color: var(--text-muted); text-decoration: none;
-    font-size: 0.78rem; letter-spacing: 0.14em;
-    text-transform: uppercase; transition: border-color 0.2s, color 0.2s;
-  }
-  .btn-outline:hover { border-color: var(--accent); color: var(--text); }
+        .nav-toggle {
+            display: none; flex-direction: column; gap: 5px;
+            cursor: pointer; background: none; border: none;
+        }
 
-  /* ── HERITAGE BAR ── */
-  .heritage-bar {
-    background: var(--accent); padding: 1.2rem 6vw;
-    display: flex; align-items: center;
-    justify-content: space-around; flex-wrap: wrap; gap: 1rem;
-  }
-  .heritage-item { display: flex; align-items: center; gap: 0.8rem; }
-  .heritage-item .hi-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2rem; font-weight: 500;
-    color: var(--white); line-height: 1;
-  }
-  .heritage-item .hi-label {
-    font-size: 0.72rem; letter-spacing: 0.1em;
-    text-transform: uppercase; opacity: 0.8; color: rgba(255,255,255,0.9);
-    line-height: 1.4;
-  }
-  .heritage-divider { width: 1px; height: 36px; background: rgba(255,255,255,0.2); }
+        .nav-toggle span { width: 24px; height: 1.5px; background: var(--copper-light); }
 
-  /* ── SECTION BASE ── */
-  section { padding: 5rem 6vw; }
-  .section-eyebrow {
-    font-size: 0.7rem; letter-spacing: 0.28em;
-    text-transform: uppercase; color: var(--accent-light);
-    margin-bottom: 0.8rem;
-    display: flex; align-items: center; gap: 0.8rem;
-  }
-  .section-eyebrow::before {
-    content: ''; width: 24px; height: 1px; background: var(--accent-light);
-  }
-  .section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.2rem, 4vw, 3.4rem);
-    font-weight: 300; line-height: 1.15; margin-bottom: 0.8rem;
-  }
-  .section-subtitle {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic; font-size: 1.15rem;
-    color: var(--text-muted); margin-bottom: 2.5rem; max-width: 55ch;
-  }
-  .reveal {
-    opacity: 0; transform: translateY(28px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
+        /* Hero */
+        .hero {
+            position: relative; height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; overflow: hidden;
+        }
 
-  /* ── STORY ── */
-  .story-section { background: var(--surface); }
-  .story-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 4.5rem; align-items: center; max-width: 1100px;
-  }
-  .story-body p {
-    color: var(--text-muted); font-size: 0.95rem;
-    line-height: 1.85; margin-bottom: 1.2rem;
-  }
-  .story-body strong { color: var(--text); font-weight: 400; }
-  .story-quote {
-    margin: 2rem 0; padding: 1.6rem 2rem;
-    border-left: 3px solid var(--accent); background: var(--surface2);
-  }
-  .story-quote p {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.45rem; font-weight: 300; font-style: italic;
-    color: var(--text) !important; margin: 0 !important; line-height: 1.4;
-  }
-  .story-quote span {
-    display: block; font-family: 'DM Sans', sans-serif;
-    font-size: 0.7rem; letter-spacing: 0.14em;
-    text-transform: uppercase; color: var(--text-muted) !important; margin-top: 0.6rem;
-  }
-  .story-image-wrap { position: relative; height: 500px; }
-  .story-img-main {
-    width: 85%; height: 380px; object-fit: cover;
-    position: absolute; top: 0; right: 0;
-    filter: brightness(0.82) saturate(0.9);
-  }
-  .story-img-accent {
-    width: 55%; height: 220px; object-fit: cover;
-    position: absolute; bottom: 0; left: 0;
-    border: 4px solid var(--surface);
-    filter: brightness(0.78) saturate(0.85);
-  }
-  .story-badge-box {
-    position: absolute; bottom: 30px; right: 20px;
-    background: var(--bg); border: 1px solid var(--accent-border);
-    padding: 0.8rem 1.2rem; text-align: center;
-    backdrop-filter: blur(4px);
-  }
-  .story-badge-box .sbb-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1rem; color: var(--accent-light); display: block;
-  }
-  .story-badge-box .sbb-label {
-    font-size: 0.62rem; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--text-muted);
-    display: block; margin-top: 0.2rem;
-  }
+        .hero-bg {
+            position: absolute; inset: 0;
+            background: url('https://images.unsplash.com/photo-1559526324-593bc073d938?w=1400&q=80') center/cover no-repeat;
+        }
 
-  /* ── BIERE ── */
-  .biere-section { background: var(--accent); padding: 4.5rem 6vw; }
-  .biere-inner {
-    display: grid; grid-template-columns: 1fr 1.3fr;
-    gap: 4rem; align-items: center; max-width: 1100px;
-  }
-  .biere-text .section-eyebrow { color: rgba(255,255,255,0.65); }
-  .biere-text .section-eyebrow::before { background: rgba(255,255,255,0.4); }
-  .biere-text .section-title { color: var(--white); }
-  .biere-text p {
-    color: rgba(255,255,255,0.8); font-size: 0.94rem; line-height: 1.82; margin-bottom: 1rem;
-  }
-  .bier-cards {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-  .bier-card {
-    background: rgba(0,0,0,0.2); padding: 1.4rem;
-    border: 1px solid rgba(255,255,255,0.1);
-    transition: background 0.2s;
-  }
-  .bier-card:hover { background: rgba(0,0,0,0.32); }
-  .bier-card .bc-icon { font-size: 1.8rem; display: block; margin-bottom: 0.6rem; }
-  .bier-card .bc-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem; font-weight: 400; color: var(--white);
-    display: block; margin-bottom: 0.3rem;
-  }
-  .bier-card .bc-type {
-    font-size: 0.65rem; letter-spacing: 0.15em;
-    text-transform: uppercase; color: rgba(255,255,255,0.5);
-    display: block; margin-bottom: 0.4rem;
-  }
-  .bier-card .bc-desc {
-    font-size: 0.82rem; color: rgba(255,255,255,0.65); line-height: 1.5;
-  }
+        .hero-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to bottom, rgba(13,11,9,0.45) 0%, rgba(13,11,9,0.6) 50%, rgba(13,11,9,0.97) 100%);
+        }
 
-  /* ── GALLERY ── */
-  .gallery-section { background: var(--bg); padding-bottom: 0; }
-  .gallery-grid {
-    display: grid; grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: 260px 260px; gap: 5px; margin-top: 2.5rem;
-  }
-  .gallery-grid img {
-    width: 100%; height: 100%; object-fit: cover;
-    filter: brightness(0.8) saturate(0.85); transition: filter 0.4s; display: block;
-  }
-  .gallery-grid img:hover { filter: brightness(0.95) saturate(1); }
-  .g1 { grid-column: 1 / 4; grid-row: 1 / 3; }
-  .g2 { grid-column: 4 / 9; grid-row: 1 / 2; }
-  .g3 { grid-column: 9 / 13; grid-row: 1 / 2; }
-  .g4 { grid-column: 4 / 7; grid-row: 2 / 3; }
-  .g5 { grid-column: 7 / 13; grid-row: 2 / 3; }
+        .hero-content {
+            position: relative; z-index: 2;
+            max-width: 800px; padding: 0 2rem;
+        }
 
-  /* ── KÜCHE ── */
-  .kueche-section { background: var(--surface); }
-  .kueche-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 1px; background: var(--accent-border);
-    border: 1px solid var(--accent-border);
-  }
-  .kueche-card {
-    background: var(--surface); padding: 2rem;
-    transition: background 0.2s;
-  }
-  .kueche-card:hover { background: var(--surface2); }
-  .kueche-card .kc-icon { font-size: 1.6rem; display: block; margin-bottom: 0.8rem; }
-  .kueche-card .kc-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.3rem; font-weight: 400; margin-bottom: 0.4rem;
-  }
-  .kueche-card .kc-desc {
-    font-size: 0.83rem; color: var(--text-muted); line-height: 1.6;
-  }
+        .hero-badge {
+            display: inline-block;
+            font-size: 0.7rem; letter-spacing: 0.3em;
+            text-transform: uppercase; color: var(--copper-light);
+            border: 1px solid rgba(184,115,51,0.3);
+            padding: 0.5rem 1.5rem;
+            margin-bottom: 2rem;
+        }
 
-  /* ── ERLEBNISSE ── */
-  .erlebnisse-section { background: var(--bg); }
-  .erlebnisse-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem; max-width: 950px;
-  }
-  .erlebnis-card {
-    border: 1px solid var(--accent-border); padding: 2rem;
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .erlebnis-card:hover { border-color: var(--accent); background: var(--surface); }
-  .erlebnis-card .ec-icon { font-size: 2rem; display: block; margin-bottom: 1rem; }
-  .erlebnis-card h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem; font-weight: 400; margin-bottom: 0.5rem;
-  }
-  .erlebnis-card p { font-size: 0.84rem; color: var(--text-muted); line-height: 1.6; }
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 600; line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
 
-  /* ── PANORAMA ── */
-  .panorama {
-    height: 380px;
-    background-image: url('https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=1800&q=85');
-    background-size: cover; background-position: center;
-    background-attachment: fixed; position: relative;
-  }
-  .panorama-overlay {
-    position: absolute; inset: 0;
-    background: rgba(13,9,6,0.65);
-    display: flex; align-items: center; justify-content: center;
-    flex-direction: column; gap: 0.8rem;
-  }
-  .panorama-label {
-    font-size: 0.7rem; letter-spacing: 0.25em;
-    text-transform: uppercase; color: var(--accent-light);
-  }
-  .panorama-quote {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.6rem, 3.5vw, 2.8rem);
-    font-weight: 300; font-style: italic;
-    color: var(--white); text-align: center;
-    max-width: 700px; padding: 0 2rem; line-height: 1.3;
-  }
-  .panorama-attr {
-    font-size: 0.72rem; letter-spacing: 0.18em;
-    text-transform: uppercase; color: rgba(255,255,255,0.4);
-  }
+        .hero-title em { font-style: italic; color: var(--copper-light); font-weight: 400; }
 
-  /* ── ÖFFNUNGSZEITEN ── */
-  .hours-section { background: var(--surface); }
-  .hours-layout {
-    display: grid; grid-template-columns: 1fr 1.1fr;
-    gap: 4rem; max-width: 950px; align-items: start;
-  }
-  .hours-row {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 0.72rem 0; border-bottom: 1px solid rgba(255,255,255,0.04);
-  }
-  .hours-row:last-child { border-bottom: none; }
-  .hours-row .day { font-size: 0.85rem; color: var(--text-muted); }
-  .hours-row .time {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.05rem; color: var(--text);
-  }
-  .contact-info { display: flex; flex-direction: column; gap: 1.4rem; }
-  .ci-item { display: flex; gap: 1rem; align-items: flex-start; }
-  .ci-icon {
-    width: 36px; height: 36px;
-    border: 1px solid var(--accent-border);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.85rem; flex-shrink: 0; color: var(--accent-light);
-  }
-  .ci-label {
-    font-size: 0.66rem; letter-spacing: 0.14em;
-    text-transform: uppercase; color: var(--text-muted);
-    display: block; margin-bottom: 0.2rem;
-  }
-  .ci-value {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem; color: var(--text); line-height: 1.3;
-  }
-  .ci-value a { color: var(--text); text-decoration: none; }
-  .ci-value a:hover { color: var(--accent-light); }
+        .hero-subtitle {
+            font-size: 1rem; color: var(--text-secondary);
+            font-weight: 300; max-width: 520px;
+            margin: 0 auto 2.5rem; line-height: 1.9;
+        }
 
-  /* ── FOOTER ── */
-  footer {
-    background: var(--bg); border-top: 1px solid var(--accent-border);
-    padding: 3rem 6vw;
-    display: flex; align-items: center;
-    justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;
-  }
-  .footer-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.3rem; font-weight: 300; color: var(--text-muted);
-  }
-  .footer-logo span { color: var(--accent-light); }
-  .footer-copy { font-size: 0.75rem; color: rgba(154,136,120,0.4); letter-spacing: 0.06em; }
-  .footer-links { display: flex; gap: 1.5rem; }
-  .footer-links a {
-    font-size: 0.75rem; color: rgba(154,136,120,0.5);
-    text-decoration: none; letter-spacing: 0.08em; transition: color 0.2s;
-  }
-  .footer-links a:hover { color: var(--text-muted); }
+        .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
-  /* ── BACK TO TOP ── */
-  #back-to-top {
-    position: fixed; bottom: 2rem; right: 2rem;
-    width: 44px; height: 44px; background: var(--accent);
-    border: none; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    opacity: 0; transform: translateY(10px);
-    transition: opacity 0.3s, transform 0.3s, background 0.2s;
-    z-index: 50; color: white; font-size: 1.1rem;
-  }
-  #back-to-top.visible { opacity: 1; transform: translateY(0); }
-  #back-to-top:hover { background: var(--accent-light); }
+        .btn-primary {
+            display: inline-block; padding: 1rem 2.5rem;
+            background: var(--copper); color: var(--bg-primary);
+            text-decoration: none; font-size: 0.73rem;
+            letter-spacing: 0.15em; text-transform: uppercase;
+            font-weight: 600; transition: all 0.4s ease;
+            border: 1px solid var(--copper);
+        }
 
-  /* ── COOKIE BANNER ── */
-  #cookie-banner {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    background: rgba(13,9,6,0.97);
-    border-top: 1px solid var(--accent-border);
-    backdrop-filter: blur(12px);
-    padding: 1.2rem 4vw;
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 1.5rem; flex-wrap: wrap; z-index: 999;
-    transform: translateY(0); transition: transform 0.4s ease;
-  }
-  #cookie-banner.hidden { transform: translateY(100%); }
-  #cookie-banner p {
-    font-size: 0.82rem; color: var(--text-muted);
-    max-width: 65ch; line-height: 1.5;
-  }
-  #cookie-banner p a { color: var(--accent-light); text-decoration: none; }
-  #cookie-accept {
-    padding: 0.6rem 1.6rem; background: var(--accent);
-    color: white; border: none; cursor: pointer;
-    font-size: 0.78rem; letter-spacing: 0.1em;
-    text-transform: uppercase; white-space: nowrap;
-    transition: background 0.2s; flex-shrink: 0;
-  }
-  #cookie-accept:hover { background: var(--accent-light); }
+        .btn-primary:hover { background: var(--copper-light); }
 
-  /* ── RESPONSIVE ── */
-  @media (max-width: 900px) {
-    nav { padding: 1rem 1.2rem; }
-    nav.scrolled { padding: 0.7rem 1.2rem; }
-    .nav-links { display: none; }
-    section { padding: 3.5rem 5vw; }
-    .story-grid, .biere-inner, .hours-layout { grid-template-columns: 1fr; gap: 2rem; }
-    .story-image-wrap { height: 320px; }
-    .story-img-main { width: 100%; height: 260px; position: relative; }
-    .story-img-accent { display: none; }
-    .kueche-grid, .erlebnisse-grid { grid-template-columns: 1fr 1fr; }
-    .bier-cards { grid-template-columns: 1fr 1fr; }
-    .gallery-grid { grid-template-columns: repeat(6, 1fr); grid-template-rows: 200px 200px; }
-    .g1 { grid-column: 1 / 3; grid-row: 1 / 3; }
-    .g2 { grid-column: 3 / 7; }
-    .g3 { display: none; }
-    .g4 { grid-column: 3 / 5; }
-    .g5 { grid-column: 5 / 7; }
-    .panorama { background-attachment: scroll; }
-    .hero-badge { display: none; }
-    footer { flex-direction: column; align-items: flex-start; gap: 1rem; }
-  }
-  @media (max-width: 600px) {
-    .kueche-grid, .erlebnisse-grid, .bier-cards { grid-template-columns: 1fr; }
-    .heritage-bar { flex-direction: column; gap: 0.8rem; }
-    .heritage-divider { width: 60px; height: 1px; }
-  }
-</style>
+        .btn-outline {
+            display: inline-block; padding: 1rem 2.5rem;
+            border: 1px solid var(--copper); color: var(--copper);
+            text-decoration: none; font-size: 0.73rem;
+            letter-spacing: 0.15em; text-transform: uppercase;
+            font-weight: 500; transition: all 0.4s ease;
+        }
+
+        .btn-outline:hover { background: rgba(184,115,51,0.1); }
+
+        /* Sections */
+        section { padding: 8rem 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        .section-label {
+            font-size: 0.68rem; letter-spacing: 0.25em;
+            text-transform: uppercase; color: var(--copper);
+            margin-bottom: 1.5rem; font-weight: 500;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 500; line-height: 1.2; margin-bottom: 1.5rem;
+        }
+
+        .section-text {
+            color: var(--text-secondary); max-width: 580px;
+            line-height: 1.9; font-weight: 300; font-size: 0.95rem;
+        }
+
+        .copper-line {
+            width: 50px; height: 2px;
+            background: var(--copper); margin: 2.5rem 0;
+        }
+
+        .copper-line-center { margin-left: auto; margin-right: auto; }
+
+        /* Brauerei */
+        .brauerei { background: var(--bg-secondary); }
+
+        .brauerei-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 5rem; align-items: center;
+        }
+
+        .brauerei-image {
+            aspect-ratio: 4/5; overflow: hidden;
+            border: 1px solid var(--border); position: relative;
+        }
+
+        .brauerei-image img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.7s ease;
+        }
+
+        .brauerei-image:hover img { transform: scale(1.03); }
+
+        /* Bier Karten */
+        .bier-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem; margin-top: 4rem;
+        }
+
+        .bier-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+
+        .bier-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-4px);
+        }
+
+        .bier-icon {
+            font-size: 2.5rem; margin-bottom: 1.2rem; display: block;
+        }
+
+        .bier-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem; font-weight: 500;
+            margin-bottom: 0.6rem; color: var(--copper-light);
+        }
+
+        .bier-card p {
+            color: var(--text-secondary); font-size: 0.85rem;
+            line-height: 1.7; font-weight: 300;
+        }
+
+        /* Speisekarte */
+        .karte { background: var(--bg-secondary); }
+
+        .karte-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 3rem; margin-top: 3rem;
+        }
+
+        .karte-category h3 {
+            font-family: var(--font-display);
+            font-size: 1.4rem; font-weight: 500;
+            color: var(--copper-light); margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .karte-item { margin-bottom: 1.8rem; }
+
+        .karte-item h4 {
+            font-family: var(--font-display);
+            font-size: 1.1rem; font-weight: 500; margin-bottom: 0.3rem;
+        }
+
+        .karte-item p {
+            color: var(--text-muted); font-size: 0.83rem;
+            font-weight: 300; line-height: 1.6;
+        }
+
+        /* Biergarten */
+        .biergarten {
+            background: var(--bg-tertiary);
+            position: relative; overflow: hidden;
+        }
+
+        .biergarten-grid {
+            display: grid; grid-template-columns: 1.2fr 1fr;
+            gap: 4rem; align-items: center;
+        }
+
+        .biergarten-image {
+            aspect-ratio: 16/10; overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .biergarten-image img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+
+        .biergarten-features {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 1.5rem; margin-top: 2.5rem;
+        }
+
+        .feature-item {
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .feature-item span {
+            font-family: var(--font-display);
+            font-size: 1.8rem; font-weight: 500;
+            color: var(--copper-light); display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .feature-item p {
+            font-size: 0.75rem; letter-spacing: 0.08em;
+            text-transform: uppercase; color: var(--text-muted);
+        }
+
+        /* Gallery */
+        .gallery-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem; margin-top: 3rem;
+        }
+
+        .gallery-item {
+            aspect-ratio: 4/3; overflow: hidden; position: relative;
+        }
+
+        .gallery-item img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .gallery-item:hover img { transform: scale(1.05); }
+
+        .gallery-item::after {
+            content: ''; position: absolute; inset: 0;
+            background: rgba(13,11,9,0.15);
+            transition: background 0.3s ease; pointer-events: none;
+        }
+
+        .gallery-item:hover::after { background: transparent; }
+
+        /* Kontakt */
+        .kontakt { background: var(--bg-secondary); }
+
+        .kontakt-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 4rem; align-items: start;
+        }
+
+        .kontakt-info { display: flex; flex-direction: column; gap: 2.5rem; }
+
+        .kontakt-block h3 {
+            font-family: var(--font-display);
+            font-size: 1.15rem; font-weight: 500;
+            color: var(--copper-light); margin-bottom: 0.8rem;
+        }
+
+        .kontakt-block p, .kontakt-block a {
+            color: var(--text-secondary); font-size: 0.9rem;
+            font-weight: 300; line-height: 1.8; text-decoration: none;
+        }
+
+        .kontakt-block a:hover { color: var(--copper-light); }
+
+        .hours-table { width: 100%; border-collapse: collapse; }
+        .hours-table tr { border-bottom: 1px solid var(--border); }
+        .hours-table td { padding: 0.55rem 0; font-size: 0.88rem; color: var(--text-secondary); font-weight: 300; }
+        .hours-table td:first-child { color: var(--text-primary); font-weight: 400; }
+        .hours-table td:last-child { text-align: right; }
+
+        .kontakt-map {
+            aspect-ratio: 4/3; border: 1px solid var(--border); overflow: hidden;
+        }
+
+        .kontakt-map iframe {
+            width: 100%; height: 100%; border: none;
+            filter: grayscale(0.8) contrast(1.1) brightness(0.6) sepia(0.2);
+            transition: filter 0.4s ease;
+        }
+
+        .kontakt-map:hover iframe {
+            filter: grayscale(0.3) contrast(1) brightness(0.8);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 4rem 2rem; text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-logo {
+            font-family: var(--font-display);
+            font-size: 1.6rem; font-weight: 600;
+            color: var(--copper-light); margin-bottom: 1.5rem;
+        }
+
+        .footer p { color: var(--text-muted); font-size: 0.8rem; font-weight: 300; }
+
+        .footer-links {
+            display: flex; justify-content: center;
+            gap: 2rem; margin: 1.5rem 0; list-style: none;
+        }
+
+        .footer-links a {
+            color: var(--text-muted); text-decoration: none;
+            font-size: 0.78rem; transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover { color: var(--copper-light); }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .nav-links.open {
+                display: flex; flex-direction: column;
+                position: absolute; top: 100%; left: 0; width: 100%;
+                background: rgba(13,11,9,0.98); padding: 2rem; gap: 1.5rem;
+            }
+            .nav-toggle { display: flex; }
+            .brauerei-grid, .kontakt-grid, .karte-grid, .biergarten-grid { grid-template-columns: 1fr; }
+            .bier-grid { grid-template-columns: 1fr 1fr; }
+            .gallery-grid { grid-template-columns: 1fr 1fr; }
+            section { padding: 5rem 1.5rem; }
+            .nav { padding: 1rem 1.5rem; }
+        }
+    </style>
 </head>
 <body>
 
-<!-- PRELOADER -->
-<div id="preloader">
-  <div class="preloader-kettle">
-    <div class="kettle-neck"></div>
-    <div class="kettle-steam">
-      <span></span><span></span><span></span>
-    </div>
-    <div class="kettle-body">
-      <div class="kettle-fill"></div>
-    </div>
-  </div>
-  <div class="preloader-text">Brauhaus Spandau</div>
-  <div class="preloader-sub">Hausgebrautes · Berlin</div>
-  <div class="preloader-line"></div>
-</div>
+    <nav class="nav" id="nav">
+        <a href="#" class="nav-logo">Brauhaus Spandau</a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#brauerei">Brauerei</a></li>
+            <li><a href="#biere">Biere</a></li>
+            <li><a href="#karte">Speisekarte</a></li>
+            <li><a href="#biergarten">Biergarten</a></li>
+            <li><a href="#galerie">Galerie</a></li>
+            <li><a href="#kontakt">Kontakt</a></li>
+        </ul>
+        <button class="nav-toggle" id="navToggle" aria-label="Menü öffnen">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
 
-<!-- SCROLL PROGRESS -->
-<div id="scroll-progress"></div>
-
-<!-- NAV -->
-<nav id="main-nav">
-  <a href="#" class="nav-logo">Brauhaus <span>Spandau</span></a>
-  <ul class="nav-links">
-    <li><a href="#geschichte">Geschichte</a></li>
-    <li><a href="#biere">Unsere Biere</a></li>
-    <li><a href="#kueche">Küche</a></li>
-    <li><a href="#besuchen" class="nav-cta">Besuchen</a></li>
-  </ul>
-</nav>
-
-<!-- HERO -->
-<section class="hero" id="start">
-  <div class="hero-bg" id="hero-bg"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-kettle-deco"></div>
-  <div class="hero-badge">
-    <span class="hb-num">30+</span>
-    <span class="hb-label">Jahre<br>Brautradition</span>
-  </div>
-  <div class="hero-copper-line"></div>
-  <div class="hero-content">
-    <div class="hero-eyebrow">Spandauer Altstadt · Berlin · An der Havel</div>
-    <h1 class="hero-title">
-      Frisch gebraut.<br>
-      <em>Echt Berlin.</em>
-    </h1>
-    <p class="hero-subtitle">Berlins Hausbrauerei in der historischen Spandauer Altstadt — Havelbräu, Bierküche, Biergarten.</p>
-    <div class="hero-actions">
-      <a href="#biere" class="btn-primary">Unsere Biere</a>
-      <a href="#besuchen" class="btn-outline">Anfahrt & Zeiten</a>
-    </div>
-  </div>
-</section>
-
-<!-- HERITAGE BAR -->
-<div class="heritage-bar">
-  <div class="heritage-item">
-    <span class="hi-num">30+</span>
-    <span class="hi-label">Jahre<br>Hausbrauerei</span>
-  </div>
-  <div class="heritage-divider"></div>
-  <div class="heritage-item">
-    <span class="hi-num">1</span>
-    <span class="hi-label">Hausgebrautes<br>Havelbräu</span>
-  </div>
-  <div class="heritage-divider"></div>
-  <div class="heritage-item">
-    <span class="hi-num">∞</span>
-    <span class="hi-label">Saisonale<br>Bierspezialitäten</span>
-  </div>
-  <div class="heritage-divider"></div>
-  <div class="heritage-item">
-    <span class="hi-num">Havel</span>
-    <span class="hi-label">Biergarten<br>am Fluss</span>
-  </div>
-</div>
-
-<!-- GESCHICHTE -->
-<section class="story-section" id="geschichte">
-  <div class="story-grid">
-    <div class="story-body reveal">
-      <div class="section-eyebrow">Geschichte</div>
-      <h2 class="section-title">Berlins Braukunst<br>in Spandau</h2>
-      <p>Spandau ist nicht einfach ein Berliner Bezirk — es ist eine <strong>eigenständige Stadt</strong> mit über 800 Jahren Geschichte, eigener Zitadelle, eigenem Charakter. Das Brauhaus Spandau hat sich diese Eigenständigkeit zu eigen gemacht: Hier braut man nicht für die Masse, sondern für Spandau.</p>
-      <p>Seit über drei Jahrzehnten stehen die <strong>kupfernen Braukessel</strong> im Herz des Lokals. Das Havelbräu — benannt nach dem Fluss, an dessen Ufer das Brauhaus liegt — ist heute eine feste Größe im Berliner Bierleben.</p>
-
-      <div class="story-quote">
-        <p>„Mehr als nur eine Brauerei — ein Ort, an dem Berlin zu sich selbst kommt."</p>
-        <span>— Brauhaus Spandau, Berlin</span>
-      </div>
-
-      <p>Brauereiführungen, Bierseminare, der <strong>Biergarten an der Havel</strong> — das Brauhaus Spandau ist zum Erlebnisort geworden, ohne dabei zu vergessen, was es zuerst war: eine Brauerei, die ausgezeichnetes Bier macht.</p>
-    </div>
-    <div class="story-image-wrap reveal">
-      <img class="story-img-main" src="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=900&q=80" alt="Braukessel">
-      <img class="story-img-accent" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=600&q=80" alt="Bier">
-      <div class="story-badge-box">
-        <span class="sbb-text">Havelbräu</span>
-        <span class="sbb-label">Das Hausgebräu</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- BIERE -->
-<section class="biere-section" id="biere">
-  <div class="biere-inner">
-    <div class="biere-text reveal">
-      <div class="section-eyebrow">Unsere Biere</div>
-      <h2 class="section-title">Havelbräu &<br>Saisonales</h2>
-      <p>Im Brauhaus Spandau braut man nach Tradition und Saison. Das <strong>Havelbräu</strong> ist das ganzjährige Hausgebräu — golden, ausgewogen, unfiltriert. Dazu kommen saisonale Spezialitäten, die je nach Jahreszeit wechseln.</p>
-      <p>Die <strong>kupfernen Braukessel</strong> sind kein Dekor — sie arbeiten täglich. Man sieht den Brauvorgang, riecht den Hopfen, schmeckt den Unterschied zu jedem Industriebier.</p>
-    </div>
-    <div class="bier-cards reveal">
-      <div class="bier-card">
-        <span class="bc-icon">🍺</span>
-        <span class="bc-name">Havelbräu Hell</span>
-        <span class="bc-type">Hausbier · Ganzjährig</span>
-        <div class="bc-desc">Das goldene Flaggschiff — unfiltriert, frisch, mit feiner Hopfennote</div>
-      </div>
-      <div class="bier-card">
-        <span class="bc-icon">🍻</span>
-        <span class="bc-name">Dunkles</span>
-        <span class="bc-type">Dunkelbier · Ganzjährig</span>
-        <div class="bc-desc">Röstaromen, vollmundig, malzige Tiefe — das Pendant zum Hellen</div>
-      </div>
-      <div class="bier-card">
-        <span class="bc-icon">🌾</span>
-        <span class="bc-name">Weizen</span>
-        <span class="bc-type">Weizenbier · Saisonal</span>
-        <div class="bc-desc">Obergärig, trüb, mit Bananen- und Nelkennoten</div>
-      </div>
-      <div class="bier-card">
-        <span class="bc-icon">❄️</span>
-        <span class="bc-name">Saisonbier</span>
-        <span class="bc-type">Wechselnd · Limitiert</span>
-        <div class="bc-desc">Wechselnde Spezialitäten je nach Jahreszeit — immer eine Überraschung</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- GALLERY -->
-<section class="gallery-section" id="galerie">
-  <div class="section-eyebrow reveal">Impressionen</div>
-  <h2 class="section-title reveal">Brauerei & Biergarten</h2>
-  <div class="gallery-grid reveal">
-    <img class="g1" src="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=600&q=85" alt="Braukessel">
-    <img class="g2" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80" alt="Restaurant">
-    <img class="g3" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=700&q=80" alt="Bier">
-    <img class="g4" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=700&q=80" alt="Küche">
-    <img class="g5" src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=900&q=80" alt="Biergarten">
-  </div>
-</section>
-
-<!-- KÜCHE -->
-<section class="kueche-section" id="kueche">
-  <div class="section-eyebrow reveal">Küche</div>
-  <h2 class="section-title reveal">Brauhaustypische<br>Gerichte</h2>
-  <p class="section-subtitle reveal">Deftige Küche, die zu gutem Bier passt.</p>
-  <div class="kueche-grid reveal">
-    <div class="kueche-card">
-      <span class="kc-icon">🥩</span>
-      <div class="kc-name">Schweinshaxe</div>
-      <div class="kc-desc">Knusprig gebraten, mit Sauerkraut und Kartoffelknödel — der Brauhausklasskier</div>
-    </div>
-    <div class="kueche-card">
-      <span class="kc-icon">🌭</span>
-      <div class="kc-name">Brauereibratwurst</div>
-      <div class="kc-desc">Hausgemacht, mit Senf und Brot — zum Bier, so wie es sein soll</div>
-    </div>
-    <div class="kueche-card">
-      <span class="kc-icon">🧅</span>
-      <div class="kc-name">Zwiebelfleisch</div>
-      <div class="kc-desc">Zartes Rindfleisch in Zwiebelsauce — berlintypisch und bodenständig</div>
-    </div>
-    <div class="kueche-card">
-      <span class="kc-icon">🥨</span>
-      <div class="kc-name">Brezeln & Obazda</div>
-      <div class="kc-desc">Frische Brezeln mit Käsecreme — der perfekte Begleiter zum Havelbräu</div>
-    </div>
-    <div class="kueche-card">
-      <span class="kc-icon">🐟</span>
-      <div class="kc-name">Gebackener Fisch</div>
-      <div class="kc-desc">Frischer Flussfish aus der Region — paniert oder gegrillt</div>
-    </div>
-    <div class="kueche-card">
-      <span class="kc-icon">🥗</span>
-      <div class="kc-name">Hausgemachter Salat</div>
-      <div class="kc-desc">Großer gemischter Salat mit Brathähnchenbrust — leichte Alternative</div>
-    </div>
-  </div>
-</section>
-
-<!-- ERLEBNISSE -->
-<section class="erlebnisse-section" id="erlebnisse">
-  <div class="section-eyebrow reveal">Erlebnisse</div>
-  <h2 class="section-title reveal">Mehr als<br>nur ein Bier</h2>
-  <div class="erlebnisse-grid reveal">
-    <div class="erlebnis-card">
-      <span class="ec-icon">🏭</span>
-      <h3>Brauereiführung</h3>
-      <p>Exklusive Führung durch die aktive Brauerei — Einblick in Maische, Gärung, Abfüllung. Mit Verkostung.</p>
-    </div>
-    <div class="erlebnis-card">
-      <span class="ec-icon">🎓</span>
-      <h3>Bierseminar</h3>
-      <p>Alles über Bierstile, Brauprozess, Verkostungsmethodik — für Bierfans und Einsteiger.</p>
-    </div>
-    <div class="erlebnis-card">
-      <span class="ec-icon">🌿</span>
-      <h3>Biergarten an der Havel</h3>
-      <p>Direkter Havelblick, frische Luft, Havelbräu vom Fass — der perfekte Berliner Sommer.</p>
-    </div>
-  </div>
-</section>
-
-<!-- PANORAMA -->
-<div class="panorama">
-  <div class="panorama-overlay">
-    <div class="panorama-label">Brauhaus Spandau · Berlin</div>
-    <div class="panorama-quote">„Frisch gebraut schmeckt es einfach besser."</div>
-    <div class="panorama-attr">— Havelbräu, seit über 30 Jahren</div>
-  </div>
-</div>
-
-<!-- ÖFFNUNGSZEITEN -->
-<section class="hours-section" id="besuchen">
-  <div class="section-eyebrow reveal">Besuchen</div>
-  <h2 class="section-title reveal">Öffnungszeiten<br>& Kontakt</h2>
-  <div class="hours-layout reveal">
-    <div>
-      <div class="hours-row">
-        <span class="day">Sonntag – Donnerstag</span>
-        <span class="time">10:00 – 23:00</span>
-      </div>
-      <div class="hours-row">
-        <span class="day">Freitag & Samstag</span>
-        <span class="time">10:00 – 24:00</span>
-      </div>
-    </div>
-    <div class="contact-info">
-      <div class="ci-item">
-        <div class="ci-icon">📍</div>
-        <div>
-          <span class="ci-label">Adresse</span>
-          <div class="ci-value">Neuendorfer Straße 1<br>13585 Berlin-Spandau</div>
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <span class="hero-badge">Braukunst aus Berlin-Spandau</span>
+            <h1 class="hero-title">Frisch gebraut,<br><em>ehrlich serviert</em></h1>
+            <p class="hero-subtitle">Hausgebrautes Bier und deftige Berliner Küche — direkt am historischen Kolk in der Altstadt Spandau. Tradition, die man schmeckt.</p>
+            <div class="hero-btns">
+                <a href="#karte" class="btn-primary">Speisekarte</a>
+                <a href="#biere" class="btn-outline">Unsere Biere</a>
+            </div>
         </div>
-      </div>
-      <div class="ci-item">
-        <div class="ci-icon">📞</div>
-        <div>
-          <span class="ci-label">Telefon</span>
-          <div class="ci-value"><a href="tel:+493035390700">+49 30 3539070</a></div>
+    </section>
+
+    <!-- Brauerei -->
+    <section class="brauerei" id="brauerei">
+        <div class="container">
+            <div class="brauerei-grid">
+                <div>
+                    <p class="section-label">Die Brauerei</p>
+                    <h2 class="section-title">Braukunst mit Berliner Charakter</h2>
+                    <div class="copper-line"></div>
+                    <p class="section-text">
+                        Im Brauhaus Spandau wird das Bier noch dort gebraut, wo es auch getrunken wird.
+                        Unsere Braumeister arbeiten nach dem deutschen Reinheitsgebot und schaffen
+                        charaktervolle Biere, die den Geist der Berliner Brautradition lebendig halten.
+                    </p>
+                    <br>
+                    <p class="section-text">
+                        Vom kupfernen Sudkessel direkt ins Glas — frischer geht es nicht.
+                        Kombiniert mit herzhafter Berliner Hausmannskost wird jeder Besuch
+                        zum Erlebnis für alle Sinne.
+                    </p>
+                </div>
+                <div class="brauerei-image">
+                    <img src="https://images.unsplash.com/photo-1532634922-8fe0b757fb13?w=800&q=80" alt="Braukessel" loading="lazy">
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="ci-item">
-        <div class="ci-icon">🌐</div>
-        <div>
-          <span class="ci-label">Website</span>
-          <div class="ci-value"><a href="https://www.brauhaus-spandau.de" target="_blank">www.brauhaus-spandau.de</a></div>
+    </section>
+
+    <!-- Biere -->
+    <section id="biere">
+        <div class="container" style="text-align: center;">
+            <p class="section-label">Vom Fass</p>
+            <h2 class="section-title">Unsere Hausbiere</h2>
+            <div class="copper-line copper-line-center"></div>
+            <div class="bier-grid">
+                <div class="bier-card">
+                    <span class="bier-icon">&#127866;</span>
+                    <h3>Havelbräu Hell</h3>
+                    <p>Süffig, mild gehopft. Unser Klassiker — ein ehrliches Helles nach Spandauer Art.</p>
+                </div>
+                <div class="bier-card">
+                    <span class="bier-icon">&#127867;</span>
+                    <h3>Spandauer Dunkel</h3>
+                    <p>Malzig, vollmundig mit Karamellnoten. Perfekt zu deftigen Gerichten.</p>
+                </div>
+                <div class="bier-card">
+                    <span class="bier-icon">&#127864;</span>
+                    <h3>Zitadellen Weizen</h3>
+                    <p>Fruchtig-frisch mit feiner Hefenote. Der ideale Begleiter für den Biergarten.</p>
+                </div>
+                <div class="bier-card">
+                    <span class="bier-icon">&#127870;</span>
+                    <h3>Saisonbier</h3>
+                    <p>Wechselnde Spezialitäten unseres Braumeisters — von Bock bis Märzen.</p>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="ci-item">
-        <div class="ci-icon">🚇</div>
-        <div>
-          <span class="ci-label">Anreise</span>
-          <div class="ci-value">U-Bahn: Spandau (U7)<br>dann 5 Min. Fußweg</div>
+    </section>
+
+    <!-- Speisekarte -->
+    <section class="karte" id="karte">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <p class="section-label">Berliner Küche</p>
+                <h2 class="section-title">Unsere Speisekarte</h2>
+                <div class="copper-line copper-line-center"></div>
+            </div>
+            <div class="karte-grid">
+                <div class="karte-category">
+                    <h3>Berliner Klassiker</h3>
+                    <div class="karte-item">
+                        <h4>Berliner Eisbein</h4>
+                        <p>Gepökelt und gegart, mit Sauerkraut und Erbspüree</p>
+                    </div>
+                    <div class="karte-item">
+                        <h4>Brandenburger Sauerbraten</h4>
+                        <p>In Rotwein mariniert, mit Rotkohl und Kartoffelklößen</p>
+                    </div>
+                    <div class="karte-item">
+                        <h4>Knusprige Schweinshaxe</h4>
+                        <p>Im Ofen gebraten, mit Biersauce und Kartoffelsalat</p>
+                    </div>
+                    <div class="karte-item">
+                        <h4>Königsberger Klopse</h4>
+                        <p>In cremiger Kapernsauce mit Rote-Bete-Salat und Kartoffeln</p>
+                    </div>
+                </div>
+                <div class="karte-category">
+                    <h3>Vom Grill & Mehr</h3>
+                    <div class="karte-item">
+                        <h4>Brauhaus-Burger</h4>
+                        <p>200g Rindfleisch, Bierkäse, Röstzwiebeln und Brauhaus-Sauce</p>
+                    </div>
+                    <div class="karte-item">
+                        <h4>Gegrillte Bratwurst-Platte</h4>
+                        <p>Drei Sorten hausgemachte Bratwurst mit Senf und Sauerkraut</p>
+                    </div>
+                    <div class="karte-item">
+                        <h4>Zanderfilet aus der Havel</h4>
+                        <p>Auf Gurkensalat mit Dillrahm und Bratkartoffeln</p>
+                    </div>
+                    <div class="karte-item">
+                        <h4>Braumeister-Flammkuchen</h4>
+                        <p>Mit Speck, Zwiebeln und Schmand — knusprig aus dem Ofen</p>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-logo">Brauhaus <span>Spandau</span></div>
-  <div class="footer-copy">© 2026 Brauhaus Spandau · Neuendorfer Straße 1 · 13585 Berlin</div>
-  <div class="footer-links">
-    <a href="#">Impressum</a>
-    <a href="#">Datenschutz</a>
-    <a href="#">Führungen</a>
-  </div>
-</footer>
+    <!-- Biergarten -->
+    <section class="biergarten" id="biergarten">
+        <div class="container">
+            <div class="biergarten-grid">
+                <div class="biergarten-image">
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&q=80" alt="Biergarten Spandau" loading="lazy">
+                </div>
+                <div>
+                    <p class="section-label">Im Freien genießen</p>
+                    <h2 class="section-title">Unser Biergarten</h2>
+                    <div class="copper-line"></div>
+                    <p class="section-text">
+                        Direkt am historischen Kolk gelegen, ist unser Biergarten einer der
+                        schönsten Plätze in Spandau. Unter alten Kastanien genießen Sie
+                        frisch gezapftes Bier und Berliner Spezialitäten — mit Blick auf
+                        die historische Altstadt.
+                    </p>
+                    <div class="biergarten-features">
+                        <div class="feature-item">
+                            <span>300+</span>
+                            <p>Sitzplätze</p>
+                        </div>
+                        <div class="feature-item">
+                            <span>Apr–Okt</span>
+                            <p>Saison</p>
+                        </div>
+                        <div class="feature-item">
+                            <span>4</span>
+                            <p>Hausbiere</p>
+                        </div>
+                        <div class="feature-item">
+                            <span>Live</span>
+                            <p>Musik Events</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- BACK TO TOP -->
-<button id="back-to-top" aria-label="Nach oben">↑</button>
+    <!-- Galerie -->
+    <section id="galerie">
+        <div class="container" style="text-align: center;">
+            <p class="section-label">Eindrücke</p>
+            <h2 class="section-title">So sieht's bei uns aus</h2>
+            <div class="copper-line copper-line-center"></div>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80" alt="Gastraum" loading="lazy"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7?w=800&q=80" alt="Bier vom Fass" loading="lazy"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80" alt="Schweinshaxe" loading="lazy"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=800&q=80" alt="Flammkuchen" loading="lazy"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1536935338788-846bb9981813?w=800&q=80" alt="Bierauswahl" loading="lazy"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80" alt="Abendstimmung" loading="lazy"></div>
+            </div>
+        </div>
+    </section>
 
-<!-- COOKIE BANNER -->
-<div id="cookie-banner">
-  <p>Diese Website verwendet Cookies für ein optimales Erlebnis. Mit der weiteren Nutzung stimmen Sie unserer <a href="#">Datenschutzerklärung</a> zu.</p>
-  <button id="cookie-accept">Akzeptieren</button>
-</div>
+    <!-- Kontakt -->
+    <section class="kontakt" id="kontakt">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <p class="section-label">Finden Sie uns</p>
+                <h2 class="section-title">Kontakt & Anfahrt</h2>
+                <div class="copper-line copper-line-center"></div>
+            </div>
+            <div class="kontakt-grid">
+                <div class="kontakt-info">
+                    <div class="kontakt-block">
+                        <h3>Adresse</h3>
+                        <p>Neuendorfer Straße 1<br>13585 Berlin-Spandau<br>Direkt am Kolk / Oranienburger Tor</p>
+                    </div>
+                    <div class="kontakt-block">
+                        <h3>Kontakt</h3>
+                        <p><a href="tel:+4930353907-0">+49 30 353 907-0</a></p>
+                        <p><a href="https://brauhaus-spandau.de" target="_blank">brauhaus-spandau.de</a></p>
+                    </div>
+                    <div class="kontakt-block">
+                        <h3>Öffnungszeiten</h3>
+                        <table class="hours-table">
+                            <tr><td>Montag</td><td>11:00 – 00:00</td></tr>
+                            <tr><td>Dienstag</td><td>11:00 – 00:00</td></tr>
+                            <tr><td>Mittwoch</td><td>11:00 – 00:00</td></tr>
+                            <tr><td>Donnerstag</td><td>11:00 – 01:00</td></tr>
+                            <tr><td>Freitag</td><td>11:00 – 01:00</td></tr>
+                            <tr><td>Samstag</td><td>10:00 – 00:00</td></tr>
+                            <tr><td>Sonntag</td><td>16:00 – 00:00</td></tr>
+                        </table>
+                    </div>
+                    <div class="kontakt-block">
+                        <h3>Anfahrt</h3>
+                        <p>U-Bahn: U7 Altstadt Spandau<br>S-Bahn: S75, S9 Spandau<br>Bus: X33 Altstadt Spandau</p>
+                    </div>
+                </div>
+                <div class="kontakt-map">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2426.5!2d13.2005!3d52.5358!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a856a3a59b79d5%3A0x7c9b0b57c1e7a6b2!2sBrauhaus%20Spandau!5e0!3m2!1sde!2sde!4v1700000000000!5m2!1sde!2sde" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Standort Brauhaus Spandau"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<script>
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      document.getElementById('preloader').classList.add('hidden');
-      document.getElementById('hero-bg').classList.add('loaded');
-    }, 950);
-  });
-  window.addEventListener('scroll', () => {
-    const s = window.scrollY;
-    const d = document.documentElement.scrollHeight - window.innerHeight;
-    document.getElementById('scroll-progress').style.width = (s/d*100) + '%';
-    document.getElementById('main-nav').classList.toggle('scrolled', s > 60);
-    document.getElementById('back-to-top').classList.toggle('visible', s > 500);
-  });
-  document.getElementById('back-to-top').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
-  if (localStorage.getItem('cookie-spandau')) document.getElementById('cookie-banner').classList.add('hidden');
-  document.getElementById('cookie-accept').addEventListener('click', () => {
-    localStorage.setItem('cookie-spandau','1');
-    document.getElementById('cookie-banner').classList.add('hidden');
-  });
-  const obs = new IntersectionObserver(entries => entries.forEach(e => {
-    if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}
-  }), {threshold:0.1});
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-</script>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">Brauhaus Spandau</div>
+        <ul class="footer-links">
+            <li><a href="#brauerei">Brauerei</a></li>
+            <li><a href="#biere">Biere</a></li>
+            <li><a href="#karte">Speisekarte</a></li>
+            <li><a href="#kontakt">Kontakt</a></li>
+        </ul>
+        <p>Neuendorfer Straße 1 &middot; 13585 Berlin-Spandau &middot; +49 30 353 907-0</p>
+        <p style="margin-top: 0.5rem;">&copy; 2026 Brauhaus Spandau. Alle Rechte vorbehalten.</p>
+    </footer>
+
+    <script>
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 80));
+
+        const navToggle = document.getElementById('navToggle');
+        const navLinks = document.getElementById('navLinks');
+        navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+        navLinks.querySelectorAll('a').forEach(l => l.addEventListener('click', () => navLinks.classList.remove('open')));
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const t = document.querySelector(this.getAttribute('href'));
+                if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
 </body>
 </html>
